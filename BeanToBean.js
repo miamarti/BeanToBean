@@ -82,5 +82,6 @@ BeanToBean.form.prototype = {
 	},
 	setCallback : function(fn) {
 		this.callback = fn;
+		this.reload();
 	}
 };
