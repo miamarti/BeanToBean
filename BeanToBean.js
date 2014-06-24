@@ -44,7 +44,7 @@ BeanToBean.form.prototype = {
 					if (obj.selected) {
 						nameBean = obj.parentNode.dataset.bean;
 						valueBean = encodeURIComponent(_this.htmlEntities(obj.value));
-						_str += nameBean + '=' + valueBean + '&';
+						_str += nameBean + '=' + encodeURIComponent(escape(valueBean)) + '&';
 						if (!obj.parentNode.multiple) {
 							_obj[nameBean] = valueBean;
 						} else {
@@ -57,7 +57,7 @@ BeanToBean.form.prototype = {
 				} else {
 					nameBean = obj.dataset.bean;
 					valueBean = encodeURIComponent(_this.htmlEntities((obj.type == 'checkbox') ? (obj.checked ? obj.value : '') : obj.value));
-					_str += nameBean + '=' + valueBean + '&';
+					_str += nameBean + '=' + encodeURIComponent(escape(valueBean)) + '&';
 					_obj[nameBean] = valueBean;
 				}
 			}
@@ -83,5 +83,11 @@ BeanToBean.form.prototype = {
 	setCallback : function(fn) {
 		this.callback = fn;
 		this.reload();
+	}
+};
+
+BeanToBean.prototype = {
+	set : function(dataJson) {
+		console.log(dataJson); // TODO: In development. Waiting to fill the screen.
 	}
 };
