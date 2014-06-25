@@ -4,6 +4,11 @@ var BeanToBean = {
 		this.str;
 		this.obj = {};
 		this.constructor(domID);
+	},
+
+	set : function(tag, obj) { // TODO: In development. Waiting to fill the screen.
+		console.log(document.querySelectorAll(tag));
+		console.log(obj);
 	}
 };
 
@@ -83,11 +88,5 @@ BeanToBean.form.prototype = {
 	setCallback : function(fn) {
 		this.callback = fn;
 		this.reload();
-	}
-};
-
-BeanToBean.prototype = {
-	set : function(dataJson) {
-		console.log(dataJson); // TODO: In development. Waiting to fill the screen.
 	}
 };
