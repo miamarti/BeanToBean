@@ -7,8 +7,17 @@ var BeanToBean = {
 	},
 
 	set : function(tag, obj) { // TODO: In development. Waiting to fill the screen.
-		console.log(document.querySelectorAll(tag));
-		console.log(obj);
+		var node = document.querySelectorAll(tag);
+		console.log(node);
+		for (data in obj) {
+			console.log(1, obj[data].toString());
+			var elemt = document.querySelector(tag + ' [data-bean="' + data + '"]');
+			if (elemt.toString() == "[object HTMLSelectElement]" && elemt.multiple) {
+			} else {
+				elemt.value = obj[data];
+			}
+			console.log(elemt.toString(), obj[data], elemt.multiple);
+		}
 	}
 };
 
