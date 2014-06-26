@@ -6,17 +6,28 @@ var BeanToBean = {
 		this.constructor(domID);
 	},
 
-	set : function(tag, obj) { // TODO: In development. Waiting to fill the screen.
-		var node = document.querySelectorAll(tag);
-		console.log(node);
+	set : function(tag, obj) {
 		for (data in obj) {
-			console.log(1, obj[data].toString());
 			var elemt = document.querySelector(tag + ' [data-bean="' + data + '"]');
 			if (elemt.toString() == "[object HTMLSelectElement]" && elemt.multiple) {
+				if (typeof obj[data] == "string") {
+					elemt.value = obj[data];
+				} else {
+					[].map.call(obj[data], function(value) {
+						[].map.call(elemt.childNodes, function(opt) {
+							if (opt.value == value) {
+								opt.selected = true;
+							}
+						});
+					});
+				}
 			} else {
-				elemt.value = obj[data];
+				if (typeof obj[data] == "string") {
+					elemt.value = obj[data];
+				} else {
+					elemt.value = obj[data][0];
+				}
 			}
-			console.log(elemt.toString(), obj[data], elemt.multiple);
 		}
 	}
 };
