@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>BeanToBean</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+	<script type="text/javascript" src="assets/js/BeanToBean.js"></script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">BeanToBean</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="index.html">Example Div</a></li>
+            <li><a href="form.html">Example Form</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">BeanToBean.JS</h1>
+
+			<div id="contatoForm" role="form">
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" value="" id="name" data-bean="name" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="text" value="" id="email" data-bean="email" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="sex">Sex</label>
+					<select id="sex" data-bean="sex" class="form-control">
+						<option value="M">M</option>
+						<option value="F">F</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="region">Region</label>
+					<select id="region" multiple="multiple" data-bean="region" class="form-control">
+						<option value="Brasil">Brasil</option>
+						<option value="Espanha">Espanha</option>
+						<option value="India">India</option>
+					</select>
+				</div>
+				<input type="checkbox" id="testCheckbox" data-bean="testCheckbox" value="true" /> Check me out
+				<hr />
+				<div class="form-group">
+					<label for="memo">Region</label>
+					<textarea rows="10" cols="70" id="memo" data-bean="memo" class="form-control"></textarea>
+				</div>
+				<div data-bean="exampleDiv"></div>
+				<span data-bean="exampleSpan"></span>
+				<p data-bean="exampleP"></p>
+			</div>
+
+			<hr />
+		
+			<script>
+				var exampleOne = new BeanToBean.form('contatoForm');
+				exampleOne.setCallback(function() {
+					// Example of return to object
+					console.log(exampleOne.toObject());
+					
+					// Sample return with uri Rest
+					console.log(exampleOne.toString());
+				});
+		
+				BeanToBean.set('#contatoForm', {
+					'region' : ['Brasil', 'India'],
+					'name' : 'Yes name!!!',
+					'sex' : 'F',
+					'email' : 'miller.augusto@gmail.com',
+					'memo' : 'This is a beautiful field test hahahaha',
+					'exampleDiv' : 'Loading...',
+					'exampleSpan' : 'The "span" is magical...',
+					'exampleP' : 'Here is a paragraph',
+					'testCheckbox' : true
+				});
+			</script>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
