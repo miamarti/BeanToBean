@@ -22,10 +22,26 @@ var BeanToBean = {
 					});
 				}
 			} else {
-				if (typeof obj[data] == "string") {
-					elemt.value = obj[data];
+				if (elemt.type != undefined) {
+					if (typeof obj[data] == "string") {
+						if (elemt.type == 'checkbox') {
+							elemt.checked = (obj[data] == "true" ? true : false);
+						} else {
+							elemt.value = obj[data];
+						}
+					} else {
+						if (elemt.type == 'checkbox') {
+							elemt.checked = obj[data];
+						} else {
+							elemt.value = obj[data][0];
+						}
+					}
 				} else {
-					elemt.value = obj[data][0];
+					if (typeof obj[data] == "string") {
+						elemt.innerHTML = obj[data];
+					} else {
+						elemt.innerHTML = obj[data][0];
+					}
 				}
 			}
 		}
@@ -68,8 +84,8 @@ BeanToBean.form.prototype = {
 				if (obj.toString() == '[object HTMLOptionElement]') {
 					if (obj.selected) {
 						nameBean = obj.parentNode.dataset.bean;
-						valueBean = encodeURIComponent(_this.htmlEntities(obj.value));
-						_str += nameBean + '=' + encodeURIComponent(escape(valueBean)) + '&';
+						valueBean = obj.value;
+						_str += nameBean + '=' + encodeURIComponent(escape(_this.htmlEntities(valueBean))) + '&';
 						if (!obj.parentNode.multiple) {
 							_obj[nameBean] = valueBean;
 						} else {
@@ -81,8 +97,12 @@ BeanToBean.form.prototype = {
 					}
 				} else {
 					nameBean = obj.dataset.bean;
-					valueBean = encodeURIComponent(_this.htmlEntities((obj.type == 'checkbox') ? (obj.checked ? obj.value : '') : obj.value));
-					_str += nameBean + '=' + encodeURIComponent(escape(valueBean)) + '&';
+					if (obj.toString() != "[object HTMLDivElement]" && obj.toString() != "[object HTMLSpanElement]" && obj.toString() != "[object HTMLParagraphElement]") {
+						valueBean = (obj.type == 'checkbox') ? (obj.checked ? obj.value : '') : obj.value;
+					} else {
+						valueBean = obj.innerHTML;
+					}
+					_str += nameBean + '=' + encodeURIComponent(escape(_this.htmlEntities(valueBean))) + '&';
 					_obj[nameBean] = valueBean;
 				}
 			}
@@ -107,6 +127,30 @@ BeanToBean.form.prototype = {
 	},
 	setCallback : function(fn) {
 		this.callback = fn;
+		this.reload();
+	},
+	setAutoSubmit : function(serverURI, callback) {
+		var _this = this;
+		this.callback = function() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', serverURI, true);
+			xhr.responseType = 'json';
+			xhr.onload = function(e) {
+				if (this.readyState == this.DONE) {
+					if (this.status == 200) {
+						try {
+							callback(eval('(' + this.response + ')'));
+						} catch (e) {
+							callback(eval(this.response));
+						}
+					} else {
+						callback(this);
+					}
+				}
+			};
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+			xhr.send(_this.toString());
+		};
 		this.reload();
 	}
 };
