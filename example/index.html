@@ -8,8 +8,12 @@
     <meta name="author" content="">
 
     <title>BeanToBean</title>
+    <link href="assets/css/console.css" rel="stylesheet">
+	<script type="text/javascript" src="assets/js/console.js"></script>
+    
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+
 	<script type="text/javascript" src="assets/js/BeanToBean.js"></script>
   </head>
 
@@ -71,6 +75,7 @@
 
 			<hr />
 		
+			<div id="consoleArea" class="consoleArea"></div>
 			<script>
 				var exampleOne = new BeanToBean.form('contatoForm');
 				exampleOne.setCallback(function() {
