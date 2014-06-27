@@ -1,0 +1,19 @@
+.consoleArea {
+	width: 100%;
+	color: #FFF !important;
+	padding: 20px !important;
+	background-color: #252C33 !important;
+}
+
+.consoleArea .tag {
+	color: #D99B28;
+}
+
+.consoleArea .code {
+	color: #39ACE6;
+}
+
+.consoleArea hr {
+	color: #343C45;
+	border: solid 1px #343C45;
+}
