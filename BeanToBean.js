@@ -1,7 +1,7 @@
 var BeanToBean = {
 	form : function(domID) {
-		this.id;
-		this.str;
+		this.id = "";
+		this.str = "";
 		this.obj = {};
 		this.constructor(domID);
 	},
@@ -53,7 +53,7 @@ BeanToBean.form.prototype = {
 	map : undefined,
 	constructor : function(domID) {
 		var _this = this;
-		var context = document.getElementById(domID);
+		var context = document.querySelector(domID);
 		if (context.toString() == '[object HTMLFormElement]') {
 			_this.changeListener = true;
 			context.addEventListener('submit', function(evt) {
@@ -66,7 +66,7 @@ BeanToBean.form.prototype = {
 	},
 	getMap : function() {
 		if (this.map == undefined) {
-			this.map = document.querySelectorAll('#' + this.id + ' [data-attribute], #' + this.id + ' [data-bean], #' + this.id + ' [data-attribute] option, #' + this.id + ' [data-bean] option');
+			this.map = document.querySelectorAll(this.id + ' [data-attribute], ' + this.id + ' [data-bean], ' + this.id + ' [data-attribute] option, ' + this.id + ' [data-bean] option');
 		}
 		return this.map;
 	},
@@ -130,8 +130,8 @@ BeanToBean.form.prototype = {
 		this.reload();
 	},
 	setAutoSubmit : function(serverURI, callback) {
-		var _this = this;
 		this.callback = function() {
+			var _this = this;
 			var xhr = new XMLHttpRequest();
 			xhr.open('POST', serverURI, true);
 			xhr.responseType = 'json';
